@@ -86,17 +86,7 @@ public class Ai : MonoBehaviour
 
         return false;
     }
-    private void OnMouseDown()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            
-            // if the seeker found the hider destroy the Gameobject
-            Debug.Log("Hider clicked!");
-            Destroy(gameObject);
+   
 
-        }
-    }
-
-
+    
 }
