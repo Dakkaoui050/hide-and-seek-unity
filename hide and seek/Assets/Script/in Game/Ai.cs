@@ -60,6 +60,18 @@ public class Ai : MonoBehaviour
             bool playerCanSeeAI = CanSeeObject(player, transform, playerSightRange, fieldOfView);
             if (playerCanSeeAI) currentState = "chasing";
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
     }
 
     bool CanSeeObject(GameObject observer, Transform target, float sightRange, float fieldOfView)
@@ -80,6 +92,7 @@ public class Ai : MonoBehaviour
         {
             if (hit.collider.gameObject == target)
             {
+                
                 return true;
             }
         }

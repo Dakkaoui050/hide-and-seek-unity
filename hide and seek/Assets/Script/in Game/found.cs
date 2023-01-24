@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class found : MonoBehaviour
 {
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,15 +18,8 @@ public class found : MonoBehaviour
         
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            // if the seeker found the hider destroy the Gameobject
-            Debug.Log("Hider clicked!");
-            Destroy(gameObject);
-
-        }
+      
     }
 }

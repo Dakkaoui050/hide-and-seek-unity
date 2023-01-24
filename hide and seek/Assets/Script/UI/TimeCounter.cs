@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TimeCounter : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class TimeCounter : MonoBehaviour
         if (timeLeft < 0)
         {
             // do something when the time is up
+            SceneManager.LoadScene(2);
         }
     }
 }
