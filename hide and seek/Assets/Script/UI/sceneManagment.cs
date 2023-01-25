@@ -9,7 +9,7 @@ public class sceneManagment : MonoBehaviour
 
     //begin
     public GameObject start;
-    public GameObject option;
+    public GameObject OptionButton;
     public GameObject Exit;
 
     //if i push start on the scene
@@ -17,27 +17,31 @@ public class sceneManagment : MonoBehaviour
     public GameObject online;
     public GameObject GoBack;
 
+    //option
+    public GameObject option;
+
     public void StartButton()
     {
         start.SetActive(false);
-        option.SetActive(false);
+        OptionButton.SetActive(false);
         Exit.SetActive(false);
 
         offline.SetActive(true); 
         online.SetActive(true);
         GoBack.SetActive(true);
-
+        option.SetActive(false);
     }
     public void GoBackButton()
     {
         start.SetActive(true);
-        option.SetActive(true);
+        OptionButton.SetActive(true);
         Exit.SetActive(true);
 
         offline.SetActive(false);
         online.SetActive(false);
         GoBack.SetActive(false);
 
+        option.SetActive(false);
     }
 
     public void StartOfflineGame()
@@ -57,9 +61,12 @@ public class sceneManagment : MonoBehaviour
     {
         print("works");
         start.SetActive(false);
-        option.SetActive(false);
+        OptionButton.SetActive(false);
         Exit.SetActive(false); 
         GoBack.SetActive(true);
+
+        option.SetActive(true);
+
     }
     
     
