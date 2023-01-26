@@ -10,33 +10,59 @@ public class option : MonoBehaviour
     public AudioSource audioSource;
     public Slider volumeSlider;
 
-    //
+    //Screen Setting 
     public Toggle fullscreenTog, vsyncTog;
 
     public TMP_Dropdown resDropdown;
 
     Resolution[] resolutions;
     private int selectedResolution;
+    public  int currentResIndex = 0;
 
-    private void Awake()
-    {
-         DontDestroyOnLoad(audioSource);
-         DontDestroyOnLoad(resDropdown);
-       
-    }
+    //Mouse sensitivity 
+    public float sensitivityX = 100f;
+    public float sensitivityY = 100f;
+    public Slider sensitivityXSlider;
+    public Slider sensitivityYSlider;
+
+    public TMP_Text sensitivityXValue;
+    public TMP_Text sensitivityYValue;
+
+   
 
     void Start()
     {
-       
+         //mouse sensitivity for the X and Y
+        sensitivityXSlider.value = sensitivityX;
+        sensitivityYSlider.value = sensitivityY;
+        sensitivityXSlider.onValueChanged.AddListener(ChangeSensitivityX);
+        sensitivityYSlider.onValueChanged.AddListener(ChangeSensitivityY);
+
         // Set the initial value of the volume slider 
         volumeSlider.value = audioSource.volume;
 
-        // size de screen
+        //screen Setting
         fullscreenTog.isOn = Screen.fullScreen;
 
         List<string> options = new List<string>();
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+           
+            string option = resolutions[i].width + " X " + resolutions[i].height;
+            options.Add(option);
 
-        resDropdown.ClearOptions();
+            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            { 
+                resDropdown.ClearOptions();
+                currentResIndex = i;
+            } 
+           
+        }
+
+        resDropdown.AddOptions(options);
+        resDropdown.value = currentResIndex;
+        resDropdown.RefreshShownValue(); 
+      
 
         //vSync setting
         if (QualitySettings.vSyncCount == 0)
@@ -48,24 +74,27 @@ public class option : MonoBehaviour
             vsyncTog.isOn = true;
         }
 
-
-        int currentResIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-
-            string option = resolutions[i].width + " X " + resolutions[i].height;
-            options.Add(option);
-
-            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResIndex = i;
-            }
-        }
-
-        resDropdown.AddOptions(options);
-        resDropdown.value = currentResIndex;
-        resDropdown.RefreshShownValue();
     }
+
+    private void Update()
+    {
+        float x = Input.GetAxis("Mouse X") * sensitivityX;
+        float y = Input.GetAxis("Mouse Y") * sensitivityY;
+
+        transform.Rotate(-y, x, 0);
+    }
+    void ChangeSensitivityX(float newSensitivityX)
+    {
+        sensitivityX = newSensitivityX;
+        sensitivityXValue.text = newSensitivityX.ToString();
+    }
+
+    void ChangeSensitivityY(float newSensitivityY)
+    {
+        sensitivityY = newSensitivityY;
+        sensitivityYValue.text = newSensitivityY.ToString();
+    }
+
 
     public void SetVolume()
     {
@@ -89,6 +118,7 @@ public class option : MonoBehaviour
 
     public void ApplyGraphics()
     {
+        //Vsync on and off funtion
         if (vsyncTog.isOn)
         {
             QualitySettings.vSyncCount = 1;
