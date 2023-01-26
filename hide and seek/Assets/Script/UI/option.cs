@@ -13,18 +13,30 @@ public class option : MonoBehaviour
     //
     public Toggle fullscreenTog, vsyncTog;
 
-    public List<ResItem> resolutions = new List<ResItem>();
+    public TMP_Dropdown resDropdown;
+
+    Resolution[] resolutions;
     private int selectedResolution;
 
-    public TMP_Text resolutionLabel;
+    private void Awake()
+    {
+         DontDestroyOnLoad(audioSource);
+         DontDestroyOnLoad(resDropdown);
+       
+    }
+
     void Start()
     {
-        DontDestroyOnLoad(audioSource);
-        // Set the initial value of the volume slider to match the current volume of the audio source
+       
+        // Set the initial value of the volume slider 
         volumeSlider.value = audioSource.volume;
 
         // size de screen
         fullscreenTog.isOn = Screen.fullScreen;
+
+        List<string> options = new List<string>();
+
+        resDropdown.ClearOptions();
 
         //vSync setting
         if (QualitySettings.vSyncCount == 0)
@@ -36,31 +48,23 @@ public class option : MonoBehaviour
             vsyncTog.isOn = true;
         }
 
-        bool foundRes = false;
-        for (int i = 0; i < resolutions.Count; i++)
+
+        int currentResIndex = 0;
+        for (int i = 0; i < resolutions.Length; i++)
         {
-            if (Screen.width == resolutions[i].horizontal && Screen.height == resolutions[i].vertical)
+
+            string option = resolutions[i].width + " X " + resolutions[i].height;
+            options.Add(option);
+
+            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
-                foundRes = true;
-
-                selectedResolution = i;
-
-                UpdateResLabel();
+                currentResIndex = i;
             }
         }
 
-        if (!foundRes)
-        {
-            ResItem newRes = new ResItem();
-            newRes.horizontal = Screen.width;
-            newRes.vertical = Screen.height;
-
-            resolutions.Add(newRes);
-            selectedResolution = resolutions.Count - 1;
-
-            UpdateResLabel();
-        }
-
+        resDropdown.AddOptions(options);
+        resDropdown.value = currentResIndex;
+        resDropdown.RefreshShownValue();
     }
 
     public void SetVolume()
@@ -69,34 +73,18 @@ public class option : MonoBehaviour
         audioSource.volume = volumeSlider.value;
     }
 
-
+    public void SetResolution(int resolutionIndex)
+    {
+        
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
    
 
-    public void resolutionsLeft()
+   
+    public void setFullscreen(bool FullS)
     {
-        selectedResolution--;
-        if (selectedResolution < 0)
-        {
-            selectedResolution = 0;
-        }
-
-        UpdateResLabel();
-    }
-
-    public void resolutionsRight()
-    {
-        selectedResolution++;
-        if (selectedResolution > resolutions.Count - 1)
-        {
-            selectedResolution = resolutions.Count - 1;
-        }
-
-        UpdateResLabel();
-    }
-
-    public void UpdateResLabel()
-    {
-        resolutionLabel.text = resolutions[selectedResolution].horizontal.ToString() + " x " + resolutions[selectedResolution].vertical.ToString();
+        Screen.fullScreen = FullS;
     }
 
     public void ApplyGraphics()
@@ -110,13 +98,8 @@ public class option : MonoBehaviour
             QualitySettings.vSyncCount = 0;
         }
 
-        Screen.SetResolution(resolutions[selectedResolution].horizontal, resolutions[selectedResolution].vertical, fullscreenTog.isOn);
+        
     }
 
 
-}
-[System.Serializable]
-public class ResItem
-{
-    public int horizontal, vertical;
 }
