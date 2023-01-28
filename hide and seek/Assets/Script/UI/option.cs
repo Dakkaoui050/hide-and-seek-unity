@@ -45,7 +45,7 @@ public class option : MonoBehaviour
         fullscreenTog.isOn = Screen.fullScreen;
 
         List<string> options = new List<string>();
-        for (int i = 0; i < resolutions.Length -1; i++)
+        for (int i = 0; i < resolutions.Length; i++)
         {
            
             string option = resolutions[i].width + " X " + resolutions[i].height;
