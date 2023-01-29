@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ai : MonoBehaviour
 {
+    found found;
     // The player character
     public GameObject player;
 
@@ -37,7 +38,7 @@ public class Ai : MonoBehaviour
         transform.position = currentHidingSpot.transform.position;
     }
 
-    void Update()
+    public void Update()
     {
         // Calculate the distance between the AI and the player
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
@@ -68,7 +69,10 @@ public class Ai : MonoBehaviour
             {
                 if (hit.collider.gameObject == this.gameObject)
                 {
+                    print("punt");
+                
                     Destroy(this.gameObject);
+                    found.fountCount();
                 }
             }
         }
