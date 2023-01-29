@@ -41,7 +41,7 @@ public class spectatormode : MonoBehaviour
         }
     }
 
-    IEnumerator Spectate()
+    public IEnumerator Spectate()
     {
         rend = GetComponent<Renderer>();
         rend.enabled = false;

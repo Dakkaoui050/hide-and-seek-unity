@@ -9,7 +9,7 @@ public class TimeCounter : MonoBehaviour
 {
     public float timeLeft = 600.0f;
     public TextMeshProUGUI timerText;
-    public GameObject[] AI;
+
 
 
     void Update()
@@ -21,14 +21,10 @@ public class TimeCounter : MonoBehaviour
         int seconds = (int)timeLeft % 60; // time in seconds
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); // how it look in de display
 
-        for (int i = 0; AI[i]; --i)
-        {
-            print("iets gebeurd");
-            Destroy(AI[i]);
-        }
+     
 
 
-        if (timeLeft < 0 || AI.Length == 0)
+        if (timeLeft < 0 )
         {
 
             // do something when the time is up
