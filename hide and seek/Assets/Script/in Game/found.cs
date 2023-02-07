@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Linq;
 
 public class found : MonoBehaviour
 {
-    public GameObject[] AI;
+    public List<GameObject> AI;
+
+    Ai AIScript;
 
     public TextMeshProUGUI Found_Text;
 
-    public int hiding;
-    public int foundOut;
+    public int hiding = 0;
+    public int foundOut = 0;
 
     spectatormode spectator;
 
@@ -25,7 +27,7 @@ public class found : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hiding = AI.Length;
+        hiding = AI.Count();
 
         if (foundOut == hiding)
         {
@@ -37,15 +39,14 @@ public class found : MonoBehaviour
             Found_Text = GameObject.Find("FoundText").GetComponent<TextMeshProUGUI>();
         }
 
-        Found_Text.text = string.Format($"{foundOut} / {hiding}" );
+
+
+        Found_Text.text =  $"{foundOut} || {hiding}" ;
         
       
     }
-    public void fountCount()
-    {
-        print("er komt een punt erbij");
-        foundOut++;
-    }
-
-
+   
 }
+
+
+
