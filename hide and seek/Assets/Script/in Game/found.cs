@@ -31,7 +31,7 @@ public class found : MonoBehaviour
 
         if (foundOut == hiding)
         {
-             spectator.StartCoroutine(spectator.Spectate());
+            print("alle objects zijn gevonden");
         }
 
         if (Found_Text == null)
@@ -39,7 +39,7 @@ public class found : MonoBehaviour
             Found_Text = GameObject.Find("FoundText").GetComponent<TextMeshProUGUI>();
         }
 
-
+        
 
         Found_Text.text =  $"{foundOut} || {hiding}" ;
         

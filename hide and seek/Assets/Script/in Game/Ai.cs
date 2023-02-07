@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Ai : MonoBehaviour
-{   
+{
+    found found;
     // The player character
     public GameObject player;
 
@@ -31,6 +32,7 @@ public class Ai : MonoBehaviour
 
     void Start()
     {
+        found = GameObject.Find("masters scripts").GetComponent<found>();
         // Choose a random hiding spot to start in
         currentHidingSpot = hidingSpots[Random.Range(0, hidingSpots.Length)];
         transform.position = currentHidingSpot.transform.position;
@@ -67,17 +69,12 @@ public class Ai : MonoBehaviour
             {
                 if (hit.collider.gameObject == this.gameObject)
                 {
-                    found found = GetComponent<found>();
-                    if (found != null)
-                    {
-                        found.foundOut++;
-                    }                  
-                    
                     print("punt");
                    
                     Destroy(this.gameObject);
-                   
-                } 
+                    found.foundOut++;
+
+                }  
                 
             }
             
