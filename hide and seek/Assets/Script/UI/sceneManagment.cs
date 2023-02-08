@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class sceneManagment : MonoBehaviour
 {
@@ -12,13 +13,19 @@ public class sceneManagment : MonoBehaviour
     public GameObject OptionButton;
     public GameObject Exit;
 
-    //if i push start on the scene
+    //option to play offline or online 
     public GameObject offline;
     public GameObject online;
     public GameObject GoBack;
 
+    //offline maps to play
+    public GameObject MapChoices;
+
     //option
     public GameObject option;
+   
+    
+   
 
     public void StartButton()
     {
@@ -40,13 +47,23 @@ public class sceneManagment : MonoBehaviour
         offline.SetActive(false);
         online.SetActive(false);
         GoBack.SetActive(false);
+        MapChoices.SetActive(false);
 
         option.SetActive(false);
     }
-
-    public void StartOfflineGame()
+    public void keuze()
     {
-        SceneManager.LoadScene(1);
+        offline.SetActive(false);
+        online.SetActive(false);
+        GoBack.SetActive(true);
+
+        MapChoices.SetActive(true);
+        
+    }
+
+    public void StartOfflineGame(string scene)
+    {
+        SceneManager.LoadScene(scene);
     }
     public void StartOnlineGame()
     {
